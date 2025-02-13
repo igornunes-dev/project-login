@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title%} Account {% endblock %}
+{% block content %}
+
+<!-- A URL /logout/ deve ser acessada usando POST (não GET) -->
+{{user.username}}
+
+
+  <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Sair</button>
+  </form>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit" name="delete_user">Excluir Conta</button>
+  </form>
+
+  
+
+{% endblock %}

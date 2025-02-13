@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+  <div style="max-width: 400px; margin: auto; padding-top: 50px;">
+    <h2>Login</h2>
+
+    {% if messages %}
+      <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 20px;">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="post" style="padding: 20px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;">
+      {% csrf_token %}
+      
+      <div style="margin-bottom: 15px;">
+        <label for="id_username" style="font-weight: bold;">Email</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+          <div style="color: #d9534f; font-size: 0.9em;">
+            {% for error in form.username.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+      
+      <div style="margin-bottom: 15px;">
+        <label for="id_password" style="font-weight: bold;">Senha</label>
+        {{ form.password }}
+        {% if form.password.errors %}
+          <div style="color: #d9534f; font-size: 0.9em;">
+            {% for error in form.password.errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+
+      <button type="submit" style="background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">
+        Login
+      </button>
+    </form>
+  </div>
+{% endblock %}
