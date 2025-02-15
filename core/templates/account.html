@@ -3,7 +3,7 @@
 {% block content %}
 
 <!-- A URL /logout/ deve ser acessada usando POST (não GET) -->
-{{user.username}}
+{{user.email}}
 
 
   <form method="post" action="{% url 'logout' %}">
