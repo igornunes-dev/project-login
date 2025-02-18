@@ -2,8 +2,6 @@ from django.urls import path, include
 from .views import IndexView, LoginView, AccountView, LogoutView
 from django.conf import settings
 from django.conf.urls.static import static
-#oferece views prontas - LogoutView é uma
-from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),

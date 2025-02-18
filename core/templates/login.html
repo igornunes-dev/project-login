@@ -3,22 +3,23 @@
 {% block content %}
 
   <div style="max-width: 400px; margin: auto; padding-top: 50px;">
-    <h2>Login</h2>
+    
 
     {% if messages %}
-      <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 20px;">
+      <div class="div_error">
         {% for message in messages %}
           <p>{{ message }}</p>
         {% endfor %}
       </div>
     {% endif %}
 
-    <form method="post" style="padding: 20px; border: 1px solid #ccc; border-radius: 5px; background-color: #f9f9f9;" action="{% url 'login'%}">
+    <form method="post" action="{% url 'login'%}">
+      <h2>Login</h2>
       {% csrf_token %}
       
-      <div style="margin-bottom: 15px;">
-        <label for="id_username" style="font-weight: bold;">Email</label>
-        {{ form.email }}
+      <div class="input_form">
+        <label for="id_username" style="font-weight: bold;">Email:</label>
+        {{ form.email }} 
         {% if form.email.errors %}
           <div style="color: #d9534f; font-size: 0.9em;">
             {% for error in form.email.errors %}
@@ -28,16 +29,12 @@
         {% endif %}
       </div>
       
-      <div style="margin-bottom: 15px;">
-        <label for="id_password" style="font-weight: bold;">Senha</label>
-        {{ form.senha }}
-        {% if form.senha.errors %}
-          <div style="color: #d9534f; font-size: 0.9em;">
-            {% for error in form.senha.errors %}
-              <p>{{ error }}</p>
-            {% endfor %}
-          </div>
-        {% endif %}
+      <div class="input_form">
+        <label for="id_password" style="font-weight: bold;">Password:</label>
+        <div class="password_container">
+          {{ form.password }}
+          <i class="fa-solid fa-eye"></i>
+        </div>
       </div>
 
       <button type="submit" style="background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">

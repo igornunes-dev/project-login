@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Cadastro {% endblock %}
+{% block content %}
+
+    {% if messages %}
+      {% for message in messages %}
+        <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 20px;">
+        <p>{{message}}</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+    <form method="post" enctype="multipart/form-data" action="{% url 'index' %}">
+      <h2>User Register</h2>
+      {% csrf_token %}
+    
+    <div class="input_form">
+        <label for="id_username">Username:</label>
+        {{ form.username }}
+    </div>
+    
+    <div class="input_form">
+        <label for="id_email">Email:</label>
+        {{ form.email }}
+    </div>
+    
+    <div class="input_form">
+        <label for="id_password">Password:</label>
+        <div class="password_container">
+          {{ form.password }}
+          <i class="fa-solid fa-eye"></i>
+        </div>
+    </div>
+    
+    <div class="input_form">
+        <label for="id_data_nascimento">Date of Birth:</label>
+        {{ form.date_of_birth }}
+    </div>
+    
+    <div class="input_form">
+        <label for="id_telefone">Phone:</label>
+        {{ form.phone }}
+    </div>
+    
+    <div class="input_form">
+        <label for="id_imagem">Image:</label>
+        {{ form.image }}
+    </div>
+    
+    <button type="submit" class="button_register">Register</button>
+    </form>
+
+    
+      
+
+{% endblock %}

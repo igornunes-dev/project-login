@@ -17,7 +17,7 @@ form h2 {
   margin-bottom: 15px;
 }
 
-.input_form input{
+.input_form input {
   width: 100%;
   padding: 10px;
   height: 35px;
@@ -48,8 +48,8 @@ form h2 {
   cursor: pointer;
 }
 
-.button_register {
-  background-color: #4CAF50;
+button {
+  background-color: #007bff;
   color: white;
   padding: 10px 15px;
   border: none;
@@ -59,6 +59,14 @@ form h2 {
   font-size: 1.2rem;
 }
 
-.button_register:hover {
-  background-color: #45a049;
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Estilo para mensagens de erro */
+.div_error {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 20px;
 }

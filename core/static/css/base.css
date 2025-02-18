@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+}
+input, button {
+  font-family: inherit;
+}
+
+header {
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+header nav ul{
+ list-style-type: none;
+ display: flex;
+ gap: 15px;
+}
+
+header nav ul li a{
+  font-size: 16px;
+  color: #333; 
+  padding: 10px 15px; 
+  border-radius: 5px; 
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+header nav ul li:hover {
+  background-color: #ddd; 
+  cursor: pointer; 
+}
