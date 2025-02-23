@@ -10,7 +10,7 @@
         </div>
       {% endfor %}
     {% endif %}
-    <form method="post" enctype="multipart/form-data" action="{% url 'index' %}">
+    <form method="post" enctype="multipart/form-data" action="{% url 'index' %}" class="forms"> 
       <h2>User Register</h2>
       {% csrf_token %}
     

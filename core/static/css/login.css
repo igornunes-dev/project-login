@@ -1,54 +1,4 @@
-form {
-  width: 100%;
-  max-width: 500px; 
-  margin: 150px auto; 
-  padding: 20px;
-  background-color: #f4f4f4;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-form h2 {
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.input_form {
-  margin-bottom: 15px;
-}
-
-.input_form input {
-  width: 100%;
-  padding: 10px;
-  height: 35px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-}
-
-.input_form input[type="file"] {
-  background-color: transparent;
-  border: 0;
-}
-
-.input_form .password_container {
-  position: relative;
-}
-
-.input_form input[type="password"] {
-  padding-right: 40px; 
-}
-
-.input_form i {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-45%);
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-button {
+.btn_login {
   background-color: #007bff;
   color: white;
   padding: 10px 15px;
@@ -59,7 +9,7 @@ button {
   font-size: 1.2rem;
 }
 
-button:hover {
+.btn_login:hover {
   background-color: #0056b3;
 }
 
@@ -70,3 +20,4 @@ button:hover {
   padding: 10px;
   margin-bottom: 20px;
 }
+

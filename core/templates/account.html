@@ -2,25 +2,95 @@
 {% block title%} Account {% endblock %}
 {% block content %}
 
-<!-- A URL /logout/ deve ser acessada usando POST (não GET) -->
-{{user.email}}
-{% if user.register.image %}
-    <img src="{{ user.register.image.url }}" alt="Imagem do usuário">
-{% else %}
-    <p>Sem imagem disponível</p>
-{% endif %}
+<style>
+  .profile-container {
+      width: 500px;
+      height: auto;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      background-color: #f9f9f9;
+  }
+
+  .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #4CAF50;
+  }
+
+  .placeholder-image {
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: #ddd;
+      color: #666;
+      font-weight: bold;
+      border: 3px solid #ccc;
+  }
+
+  .profile-info {
+      margin-top: 15px;
+      font-size: 20px;
+  }
+
+  .profile-info span {
+      color: #000000;
+      font-weight: 700;
+  }
+
+  .button_leave {
+    margin: 20px 0;
+  }
+
+  .button_leave, .button_delete {
+    width: 50%;
+    height: 30px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #4CAF50;
+    border: 0;
+    border-radius: 6px;
+    transition: all .2s ease;
+  }
+
+  .button_leave:hover, .button_delete:hover {
+    transform: scale(1.03);
+  }
+</style>
 
 
+<div class="profile-container">
+  {% if user.register.image %}
+      <img src="{{ user.register.image.url }}" alt="Imagem do usuário" class="profile-image">
+  {% else %}
+      <div class="placeholder-image">Sem Imagem</div>
+  {% endif %}
+
+  <div class="profile-info">
+      <p><span>Email:</span> {{ user.email }}</p>
+      <p><span>Data de Nascimento:</span> {{ user.register.date_of_birth|default:"Não informado" }}</p>
+      <p><span>Telefone:</span> {{ user.register.phone|default:"Não informado" }}</p>
+      <p><span>Ultimo Login:</span> {{ user.last_login|date:"d/m/Y H:i" }}</p>
+  </div>
   <form method="post" action="{% url 'logout' %}">
     {% csrf_token %}
     <button type="submit" class="button_leave">Leave</button>
   </form>
-
-  <form method="POST">
-    {% csrf_token %}
-    <button type="submit" name="delete_user" class="button_delete">Delete Account</button>
-  </form>
-
   
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" name="delete_user" class="button_delete">Delete Account</button>
+    </form>
+</div>
 
+
+<!-- A URL /logout/ deve ser acessada usando POST (não GET) -->
 {% endblock %}

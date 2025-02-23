@@ -12,9 +12,13 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from urllib.parse import urlparse
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -34,6 +38,9 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'core',
     'stdimage',
+    "django_otp",
+    "django_otp.plugins.otp_totp", 
+    "django_otp.plugins.otp_static",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_otp.middleware.OTPMiddleware",
 ]
 
 ROOT_URLCONF = 'login.urls'
@@ -82,7 +90,7 @@ DATABASES = {
         'NAME': 'login',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'HOST': 'postgres-db',
         'PORT': '5432',
     }
 }
@@ -129,6 +137,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'core/static'), 
 ]
+
+AUTH_USER_MODEL = "core.CustomUser"
 
 
 # Default primary key field type

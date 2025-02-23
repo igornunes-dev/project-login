@@ -1,0 +1,77 @@
+  /* Centraliza o conteúdo */
+  .profile-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 90vh;
+      flex-direction: column;
+      background-color: #f7f7f7;
+  }
+
+  /* Estilos do QR Code */
+  .qr-container {
+      text-align: center;
+      margin-bottom: 30px;
+  }
+
+  .qr-code {
+      width: 250px;
+      height: 250px;
+      border-radius: 10px;
+  }
+
+  /* Estilos do formulário */
+  .form-container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+  }
+
+  .title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #333;
+  }
+
+  .otp-form p {
+      margin-bottom: 15px;
+      font-size: 16px;
+      color: #555;
+  }
+
+  .submit-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+
+  .submit-btn:hover {
+      background-color: #45a049;
+  }
+
+  .messages {
+      margin-top: 20px;
+  }
+
+  .message {
+      font-size: 16px;
+      color: #d9534f;
+      padding: 10px;
+      background-color: #f2dede;
+      border-radius: 5px;
+  }
+
+  .message.success {
+      color: #5bc0de;
+      background-color: #d9edf7;
+  }

@@ -13,7 +13,7 @@
       </div>
     {% endif %}
 
-    <form method="post" action="{% url 'login'%}">
+    <form method="post" action="{% url 'login'%}" class="forms">
       <h2>Login</h2>
       {% csrf_token %}
       
@@ -37,7 +37,11 @@
         </div>
       </div>
 
-      <button type="submit" style="background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer;">
+      <label for="enable_mfa">
+        <input type="checkbox" name="enable_mfa" id="enable_mfa" /> Ativar verificação em 2 etapas (MFA)
+    </label>
+
+      <button type="submit" class="btn_login">
         Login
       </button>
     </form>
