@@ -6,6 +6,8 @@ copy requirements.txt .
 
 run pip install --upgrade pip setuptools wheel
 run pip install -r requirements.txt
+RUN apt-get update && apt-get install -y ca-certificates
+
 
 copy . .
 

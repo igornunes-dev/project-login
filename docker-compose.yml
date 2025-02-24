@@ -11,14 +11,14 @@ services:
     depends_on:
       - postgres-db
     environment:
-      - DATABASE_URL=postgres://postgres:root@postgres-db:5432/login
+      - DATABASE_URL=postgres://postgres:root@postgres-db:5432/project-login-db
     networks:
       - app-network
 
   postgres-db:
     image: postgres:latest
     environment:
-      POSTGRES_DB: login
+      POSTGRES_DB: project-login-db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
     networks:

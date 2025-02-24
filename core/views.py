@@ -10,6 +10,7 @@ import pyotp
 import qrcode
 import io
 import base64
+from django.utils.timezone import localtime
 
 CustomUser = get_user_model()
 
@@ -165,12 +166,17 @@ class LoginView(FormView):
             messages.error(self.request, "Credenciais inválidas.")
         return super().form_valid(form)
 
+#### AQUI VERIFICARRRR
 class AccountView(View):
     template_name = 'account.html'
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
             return redirect('login')
+        context = {
+            'user_last_login': localtime(request.user.last_login),
+            'user_date_joined': localtime(request.user.date_joined),
+        }
         return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
