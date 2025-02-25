@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from urllib.parse import urlparse
-import ssl
 # from dotenv import load_dotenv
 
 # load_dotenv()
@@ -93,7 +92,7 @@ DATABASES = {
         'NAME': 'project-login-db',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'postgres-db',
+        'HOST': 'project-login-postgres-db-1',
         'PORT': '5432',
     }
 }
@@ -153,16 +152,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'account'
 LOGOUT_REDIRECT_URL = '/login/'
 
-# mail = os.environ.get('MAIL')
-# mail_pass = os.environ.get('MAIL_PASS')
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'testedjango0@gmail.com'
-EMAIL_HOST_PASSWORD = '12345678djangoteste'
+EMAIL_HOST_PASSWORD = 'kzgy jjue vjvd hxmw'
 
-EMAIL_SSL_CONTEXT = ssl.create_default_context()
-EMAIL_SSL_CONTEXT.check_hostname = False
-EMAIL_SSL_CONTEXT.verify_mode = ssl.CERT_NONE
+
