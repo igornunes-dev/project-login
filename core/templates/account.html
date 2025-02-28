@@ -3,9 +3,6 @@
 {% block content %}
 
 
-</style>
-
-
 <div class="profile-container">
   {% if user.register.image %}
       <img src="{{ user.register.image.url }}" alt="Imagem do usuário" class="profile-image">
@@ -25,12 +22,9 @@
     <button type="submit" class="button_leave">Leave</button>
   </form>
   
-    <form method="POST">
-      {% csrf_token %}
-      <button type="submit" name="delete_user" class="button_delete">Delete Account</button>
-    </form>
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit" name="delete_user" class="button_delete">Delete Account</button>
+  </form>
 </div>
-
-
-<!-- A URL /logout/ deve ser acessada usando POST (não GET) -->
 {% endblock %}

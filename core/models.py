@@ -14,4 +14,3 @@ class Register(models.Model):
 
 class CustomUser(AbstractUser):
   mfa_secret = models.CharField(max_length=32, blank=True, null=True)
-  mfa_enable = models.BooleanField(default=False)

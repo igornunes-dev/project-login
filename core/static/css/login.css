@@ -21,3 +21,18 @@
   margin-bottom: 20px;
 }
 
+.password_reset {
+  text-align: right;
+  margin: 5px 0;
+}
+
+.password_reset a {
+  color: #000;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.password_reset a:hover {
+  text-decoration: underline;
+}
+

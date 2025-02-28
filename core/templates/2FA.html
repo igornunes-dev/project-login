@@ -1,24 +1,25 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
 
-<!-- Container principal -->
+<!-- Main container -->
 <div class="profile-container">
     <!-- QR Code -->
-    
-    <!-- Formulário de verificação OTP -->
     <div class="form-container">
-      <div class="qr-container">
-          <img src="{{ qrcode }}" alt="QR Code MFA" class="qr-code">
-      </div>
-        <h2 class="title">Verifique seu código OTP</h2>
-        <form method="post" class="otp-form">
+        <div class="qr-container">
+            <img src="{{ qrcode }}" alt="QR Code MFA" class="qr-code">
+        </div>
+        
+        <h2 class="title">Verify your OTP code</h2>
+        
+        <form method="post" class="otp-form" action="{% url 'verification' %}">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="submit-btn">Verificar Código</button>
+            <button type="submit" class="submit-btn">Verify Code</button>
         </form>
 
-        <!-- Mensagens de erro ou sucesso -->
+        <!-- Error or success messages -->
         {% if messages %}
             <div class="messages">
                 {% for message in messages %}
@@ -30,3 +31,4 @@
 </div>
 
 {% endblock %}
+
