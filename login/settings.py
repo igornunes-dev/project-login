@@ -34,6 +34,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+SITE_ID = 1
 
 # Application definition
 
@@ -43,6 +44,11 @@ INSTALLED_APPS = [
     "django_otp",
     "django_otp.plugins.otp_totp", 
     "django_otp.plugins.otp_static",
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,6 +56,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,  # Para compatibilidade com Google OAuth 2.0 PKCE
+    }
+}
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -158,5 +175,10 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'testedjango0@gmail.com'
 EMAIL_HOST_PASSWORD = 'kzgy jjue vjvd hxmw'
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
 
 

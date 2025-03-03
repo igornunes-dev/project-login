@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %} Register {% endblock %}
 {% block content %}
+{% load socialaccount %}
 
     {% if messages %}
       {% for message in messages %}
@@ -33,11 +34,6 @@
     </div>
     
     <div class="input_form">
-        <label for="id_data_nascimento">Date of Birth:</label>
-        {{ form.date_of_birth }}
-    </div>
-    
-    <div class="input_form">
         <label for="id_telefone">Phone:</label>
         {{ form.phone }}
     </div>
@@ -48,6 +44,7 @@
     </div>
     
     <button type="submit" class="button_register">Register</button>
+    <a href="{% provider_login_url 'google' %}?next=/" class="button_google">Register with Google</a>
     </form>
 
 {% endblock %}
