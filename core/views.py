@@ -24,7 +24,6 @@ CustomUser = get_user_model()
 class CustomPasswordResetView(PasswordResetView):
     def post(self, request, *args, **kwargs):
         email = request.POST.get("email")
-        print("Email sent:", email)
 
         # Checks if the email is registered
         if not email or not CustomUser.objects.filter(email=email).exists():
@@ -178,7 +177,6 @@ class IndexView(FormView):
     def form_valid(self, form):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
-        date_of_birth = form.cleaned_data['date_of_birth']
         phone = form.cleaned_data['phone']
         image = form.cleaned_data['image']
         
@@ -188,7 +186,7 @@ class IndexView(FormView):
         
         try:
             user = CustomUser.objects.create_user(username=email, email=email, password=password)
-            Register.objects.create(user=user, date_of_birth=date_of_birth, image=image, phone=phone)
+            Register.objects.create(user=user, image=image, phone=phone)
             messages.success(self.request, "Registration successful.")
             return super().form_valid(form)
         except Exception as e:
