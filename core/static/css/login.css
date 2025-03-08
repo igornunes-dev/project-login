@@ -14,11 +14,15 @@
 }
 
 /* Estilo para mensagens de erro */
-.div_error {
-  background-color: #f8d7da;
-  color: #721c24;
+.message {
+  background-color: #0056b3;
   padding: 10px;
   margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+.message p {
+  color: #fff;
 }
 
 .password_reset {
@@ -36,3 +40,35 @@
   text-decoration: underline;
 }
 
+.container-a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  border: 1px solid #898989;
+  padding: 10px 0;
+  text-decoration: none;
+  color: #000;
+  border-radius: 5px;
+}
+
+.container-a:hover {
+  color: #000000bd;
+}
+
+.container-a .icon-google {
+  width: 30px;
+  margin-right: 10px;
+}
+
+.container-continue {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 90vh;
+}
+
+.input_form label {
+  font-weight: 800;
+}

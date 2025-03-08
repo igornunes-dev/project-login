@@ -4,7 +4,6 @@ function togglePasswordVisibility(inputField, eyeIcon) {
     const type = inputField.type === 'password' ? 'text' : 'password';
     inputField.type = type;
 
-    // Trocar ícones de olho
     if (type === 'password') {
       eyeIcon.classList.remove("fa-eye-slash");
       eyeIcon.classList.add("fa-eye");
@@ -40,6 +39,14 @@ if (eyeIcon3 && inputNewPassword2) {
     togglePasswordVisibility(inputNewPassword2, eyeIcon3);
   });
 }
+
+
+window.onload = () => {
+  setTimeout(() => {
+    document.querySelector("main").style.opacity = "1"; 
+  }, 500); 
+};
+
 
 
 

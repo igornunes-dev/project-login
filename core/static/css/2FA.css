@@ -1,5 +1,5 @@
   /* Centraliza o conteúdo */
-  .profile-container {
+  .profile-container-2FA {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -57,21 +57,4 @@
 
   .submit-btn:hover {
       background-color: #45a049;
-  }
-
-  .messages {
-      margin-top: 20px;
-  }
-
-  .message {
-      font-size: 16px;
-      color: #d9534f;
-      padding: 10px;
-      background-color: #f2dede;
-      border-radius: 5px;
-  }
-
-  .message.success {
-      color: #5bc0de;
-      background-color: #d9edf7;
   }

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import RegisterForm, LoginForm, OTPForm
+from django.views.generic import TemplateView
 from .models import Register
 from django.urls import reverse_lazy
 from django.views.generic import FormView
@@ -17,24 +18,30 @@ import pyotp
 import qrcode
 import io
 import base64
-from django.utils.timezone import localtime
+from django.contrib.auth import get_backends
 
 CustomUser = get_user_model()
 
 class CustomPasswordResetView(PasswordResetView):
     def post(self, request, *args, **kwargs):
         email = request.POST.get("email")
+        print(email)
 
-        # Checks if the email is registered
+        # Verifica se o e-mail está registrado
         if not email or not CustomUser.objects.filter(email=email).exists():
             messages.error(request, "No account found with this email.")
-            return redirect("password_reset") 
+            return redirect("password_reset")
 
         user = CustomUser.objects.get(email=email)
-        domain = get_current_site(request).domain
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        token = default_token_generator.make_token(user)
+        
+        # Garantir que o protocolo esteja correto (http ou https)
+        protocol = "https" if request.is_secure() else "http"  # Adiciona o protocolo correto
+        domain = get_current_site(request).domain if not request.META.get('HTTP_HOST').startswith('localhost') else 'localhost:8000'
+        
+        uid = urlsafe_base64_encode(force_bytes(user.pk))  # Codifica o ID do usuário
+        token = default_token_generator.make_token(user)  # Gera o token de redefinição de senha
 
+        # Contexto para os templates de e-mail
         context = {
             "email": user.email,
             "domain": domain,
@@ -42,30 +49,37 @@ class CustomPasswordResetView(PasswordResetView):
             "uid": uid,
             "user": user,
             "token": token,
-            "protocol": "https" if request.is_secure() else "http",
+            "protocol": protocol, 
         }
 
-        # Renders the email body
+        # Gera o link de redefinição de senha com o protocolo correto
+        reset_link = f"{context['protocol']}://{context['domain']}/reset/{context['uid']}/{context['token']}/"
+        print("Reset password link:", reset_link)  # Apenas imprime para verificar o link gerado
+
+        # Gera o assunto e o corpo do e-mail
         subject = render_to_string("registration/password_reset_subject.txt", context)
-        subject = "".join(subject.splitlines())  # Removes line breaks from the subject
+        subject = "".join(subject.splitlines())  # Remove quebras de linha extras
         body = render_to_string("registration/password_reset_email.html", context)
 
-        # Sends the email with both text and HTML support
+        # Cria o e-mail com corpo em HTML e texto simples
         email_message = EmailMultiAlternatives(
-            subject,  # Subject
-            body,     # Text email body
-            'from_email@example.com',  # Sender
-            [user.email]  # Recipient
+            subject,  # Assunto do e-mail
+            body,     # Corpo do e-mail em texto simples
+            'from_email@example.com',  # E-mail do remetente
+            [user.email]  # E-mail do destinatário
         )
 
-        # Attaches the HTML version of the email
-        email_message.attach_alternative(body, "text/html")
+        email_message.attach_alternative(body, "text/html")  # Corpo em HTML
 
-        # Sends the email
-        email_message.send()
+        try:
+            email_message.send()  # Envia o e-mail
+            messages.success(request, "Password recovery email sent successfully. Check your inbox.")
+        except Exception as e:
+            messages.error(request, f"An error occurred while sending the email: {str(e)}")
 
-        messages.success(request, "Password recovery email sent successfully. Check your inbox.")
         return redirect("password_reset_done")
+
+
     
 class TwoFactorAuth:
     """Class to handle 2FA verification."""
@@ -88,8 +102,7 @@ class ProfileView(FormView):
     def dispatch(self, request, *args, **kwargs):
         """Verifica se o usuário está autenticado antes de prosseguir com o processamento da requisição"""
         if not request.user.is_authenticated:
-            print("REDIRECIONANDO PARA LOGIN")
-            return redirect('login')  # Redireciona para o login se o usuário não estiver autenticado
+            return redirect('login')
         return super().dispatch(request, *args, **kwargs)
 
     def _generate_qr_code(self, user):
@@ -128,7 +141,7 @@ class ProfileView(FormView):
         # Verifies the OTP code
         if pyotp.TOTP(user.mfa_secret).verify(otp_code):
             messages.success(self.request, "OTP code verified successfully!")
-            return redirect("account")  # Redirects to the account page
+            return redirect("account") 
         else:
             messages.error(self.request, "Invalid OTP code!")
             return self.form_invalid(form)
@@ -158,12 +171,12 @@ class VerificationView(View):
             messages.error(request, "OTP code not sent.")
             return redirect("2FA")
 
-        # Verifies the OTP code
         if pyotp.TOTP(user.mfa_secret).verify(otp_code):
-            # Logs the user in
+            backend = get_backends()[0]  # Pega o primeiro backend configurado
+            user.backend = f"{backend.__module__}.{backend.__class__.__name__}"
             login(request, user)
             messages.success(request, "Login successful!")
-            return redirect("account")  # Redirects to account page
+            return redirect("account") 
 
         messages.error(request, "Invalid OTP code!")
         return redirect("2FA") 
@@ -174,10 +187,11 @@ class IndexView(FormView):
     form_class = RegisterForm
     success_url = reverse_lazy('login')
 
+    #form é uma instacia de RegisteForm
     def form_valid(self, form):
+        #form tem um atributo chamado cleaned_data para pegar dados do form que é o do RegisterForm
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
-        phone = form.cleaned_data['phone']
         image = form.cleaned_data['image']
         
         if CustomUser.objects.filter(email=email).exists():
@@ -186,7 +200,7 @@ class IndexView(FormView):
         
         try:
             user = CustomUser.objects.create_user(username=email, email=email, password=password)
-            Register.objects.create(user=user, image=image, phone=phone)
+            Register.objects.create(user=user, image=image)
             messages.success(self.request, "Registration successful.")
             return super().form_valid(form)
         except Exception as e:
@@ -196,31 +210,24 @@ class IndexView(FormView):
 class LoginView(FormView):
     template_name = 'login.html'
     form_class = LoginForm
-    success_url = '/account/'  # Caso o login seja bem-sucedido, vai para a conta do usuário
+    success_url = '/account/'
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
-        enable_mfa = form.cleaned_data.get('enable_mfa', False)  # Verifica se o checkbox foi marcado
+        enable_mfa = form.cleaned_data.get('enable_mfa', False)  
 
         user = authenticate(username=email, password=password)
-
-        print(f"enable_mfa: {enable_mfa}")
+       
         if user:
-            # Se o checkbox de MFA estiver marcado, redireciona para 2FA
             if enable_mfa:
-                # Gerar um segredo para o usuário se não tiver MFA habilitad
                 login(self.request, user)
                 self.request.session['user_id'] = user.id
-                print("MFA ativado, redirecionando para 2FA.")
                 return redirect('2FA') 
 
-            # Se o MFA não estiver ativado, realiza o login normalmente
-            print("Usuário autenticado, redirecionando para account.")
-            print(f"Usuário autenticado: {user}")
             login(self.request, user)
             messages.success(self.request, "Authenticated successfully.")
-            return redirect('account')  # Redireciona para a página da conta do usuário
+            return redirect('account') 
         else:
             messages.error(self.request, "Invalid credentials.")
 
@@ -236,7 +243,8 @@ class AccountView(View):
         return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
-        if 'delete_user' in request.POST:
+        # button_delete = request.POST.get("delete_user")
+        if "delete_user" in request.POST:
             user = request.user
             user.delete()
             logout(request)

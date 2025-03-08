@@ -10,7 +10,7 @@ class RegisterForm(forms.ModelForm):
 
     class Meta:
         model = Register
-        fields = ['username','email', 'image', 'phone']
+        fields = ['username','email', 'image']
 
 class LoginForm(forms.Form):
     email = forms.EmailField(max_length=255)

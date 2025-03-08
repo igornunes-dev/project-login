@@ -12,3 +12,28 @@
 .button_register:hover {
   background-color: #45a049;
 }
+
+.message {
+  background-color: #0056b3;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+}
+
+.message p {
+  color: #fff;
+}
+
+@media (max-width: 420px) {
+  .forms {
+    padding: 30px;
+  }
+
+  .forms h2 {
+    font-size: 24px;
+  }
+
+  .forms .input_form label {
+    font-size: 16px;
+  }
+}

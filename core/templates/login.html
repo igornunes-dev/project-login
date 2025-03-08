@@ -1,24 +1,27 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load socialaccount %}
+
 
   <div style="max-width: 400px; margin: auto; padding-top: 50px;">
     
 
     {% if messages %}
-      <div class="div_error">
+      <div class="message">
         {% for message in messages %}
           <p>{{ message }}</p>
         {% endfor %}
       </div>
     {% endif %}
+    
 
     <form method="post" action="{% url 'login' %}" class="forms">
       <h2>Login</h2>
       {% csrf_token %}
       
       <div class="input_form">
-        <label for="id_username" style="font-weight: bold;">Email:</label>
+        <label for="id_username">Email:</label>
         {{ form.email }} 
         {% if form.email.errors %}
           <div style="color: #d9534f; font-size: 0.9em;">
@@ -30,7 +33,7 @@
       </div>
       
       <div class="input_form">
-        <label for="id_password" style="font-weight: bold;">Password:</label>
+        <label for="id_password">Password:</label>
         <div class="password_container">
           {{ form.password }}
           <i class="fa-solid fa-eye"></i>
@@ -45,9 +48,17 @@
         <a href="/reset_password/">Forgot password?</a>
       </div>
 
+      <a href="{% provider_login_url 'google' %}" class="container-a">
+        <img src="{% static 'image/googleicon.png' %}" alt="icone google" class="icon-google">
+        Login with Google
+      </a>
+
+
       <button type="submit" class="btn_login">
         Login
       </button>
+
+
     </form>
   </div> 
 {% endblock %}

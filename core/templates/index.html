@@ -2,15 +2,15 @@
 {% load static %}
 {% block title %} Register {% endblock %}
 {% block content %}
-{% load socialaccount %}
 
     {% if messages %}
+    <div class="message">
       {% for message in messages %}
-        <div style="background-color: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 20px;">
-        <p>{{message}}</p>
-        </div>
+        <p>{{ message }}</p>
       {% endfor %}
+    </div>
     {% endif %}
+    
     <form method="post" enctype="multipart/form-data" action="{% url 'index' %}" class="forms"> 
       <h2>User Register</h2>
       {% csrf_token %}
@@ -34,17 +34,11 @@
     </div>
     
     <div class="input_form">
-        <label for="id_telefone">Phone:</label>
-        {{ form.phone }}
-    </div>
-    
-    <div class="input_form">
         <label for="id_imagem">Image:</label>
         {{ form.image }}
     </div>
     
     <button type="submit" class="button_register">Register</button>
-    <a href="{% provider_login_url 'google' %}?next=/" class="button_google">Register with Google</a>
     </form>
 
 {% endblock %}

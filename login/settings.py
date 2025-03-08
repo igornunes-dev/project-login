@@ -34,7 +34,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-SITE_ID = 1
+SITE_ID = 2
 
 # Application definition
 
@@ -63,7 +63,7 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         },
-        'OAUTH_PKCE_ENABLED': True,  # Para compatibilidade com Google OAuth 2.0 PKCE
+        'OAUTH_PKCE_ENABLED': True, 
     }
 }
 
@@ -107,10 +107,10 @@ WSGI_APPLICATION = 'login.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'project-login-db',
+        'NAME':  'project-login-db',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'project-login-postgres-db-1',
+        'HOST': 'postgres-db',
         'PORT': '5432',
     }
 }
@@ -164,10 +164,13 @@ AUTH_USER_MODEL = "core.CustomUser"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1037138309034-7gmjid8mhkueonif62qp5el3ba2ika4g.apps.googleusercontent.com'
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
 
 
-LOGIN_REDIRECT_URL = 'account'
+LOGIN_REDIRECT_URL = '/account/'  
 LOGOUT_REDIRECT_URL = '/login/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
