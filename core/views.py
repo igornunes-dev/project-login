@@ -27,21 +27,18 @@ class CustomPasswordResetView(PasswordResetView):
         email = request.POST.get("email")
         print(email)
 
-        # Verifica se o e-mail está registrado
         if not email or not CustomUser.objects.filter(email=email).exists():
             messages.error(request, "No account found with this email.")
             return redirect("password_reset")
 
         user = CustomUser.objects.get(email=email)
         
-        # Garantir que o protocolo esteja correto (http ou https)
-        protocol = "https" if request.is_secure() else "http"  # Adiciona o protocolo correto
+        protocol = "https" if request.is_secure() else "http"  
         domain = get_current_site(request).domain if not request.META.get('HTTP_HOST').startswith('localhost') else 'localhost:8000'
         
-        uid = urlsafe_base64_encode(force_bytes(user.pk))  # Codifica o ID do usuário
-        token = default_token_generator.make_token(user)  # Gera o token de redefinição de senha
+        uid = urlsafe_base64_encode(force_bytes(user.pk)) 
+        token = default_token_generator.make_token(user)  
 
-        # Contexto para os templates de e-mail
         context = {
             "email": user.email,
             "domain": domain,
@@ -52,24 +49,21 @@ class CustomPasswordResetView(PasswordResetView):
             "protocol": protocol, 
         }
 
-        # Gera o link de redefinição de senha com o protocolo correto
         reset_link = f"{context['protocol']}://{context['domain']}/reset/{context['uid']}/{context['token']}/"
-        print("Reset password link:", reset_link)  # Apenas imprime para verificar o link gerado
+        print("Reset password link:", reset_link)  
 
-        # Gera o assunto e o corpo do e-mail
         subject = render_to_string("registration/password_reset_subject.txt", context)
-        subject = "".join(subject.splitlines())  # Remove quebras de linha extras
+        subject = "".join(subject.splitlines())  
         body = render_to_string("registration/password_reset_email.html", context)
 
-        # Cria o e-mail com corpo em HTML e texto simples
         email_message = EmailMultiAlternatives(
-            subject,  # Assunto do e-mail
-            body,     # Corpo do e-mail em texto simples
-            'from_email@example.com',  # E-mail do remetente
-            [user.email]  # E-mail do destinatário
+            subject,  
+            body,   
+            'from_email@example.com',
+            [user.email]  
         )
 
-        email_message.attach_alternative(body, "text/html")  # Corpo em HTML
+        email_message.attach_alternative(body, "text/html")  
 
         try:
             email_message.send()  # Envia o e-mail
@@ -82,14 +76,11 @@ class CustomPasswordResetView(PasswordResetView):
 
     
 class TwoFactorAuth:
-    """Class to handle 2FA verification."""
-
     def __init__(self, user):
         self.user = user
         self.totp = pyotp.TOTP(user.mfa_secret)
     
     def verify(self, otp):
-        """Verifies the OTP code and enables 2FA if valid."""
         if self.totp.verify(otp):
             self.user.save()
             return True
@@ -100,14 +91,11 @@ class ProfileView(FormView):
     form_class = OTPForm
 
     def dispatch(self, request, *args, **kwargs):
-        """Verifica se o usuário está autenticado antes de prosseguir com o processamento da requisição"""
         if not request.user.is_authenticated:
             return redirect('login')
         return super().dispatch(request, *args, **kwargs)
 
     def _generate_qr_code(self, user):
-        """Helper method to generate the QR Code based on the user's mfa_secret"""
-
         if not user.mfa_secret:
             user.mfa_secret = pyotp.random_base32()
             user.save()
@@ -138,7 +126,6 @@ class ProfileView(FormView):
         
         otp_code = form.cleaned_data['otp_code']    
         
-        # Verifies the OTP code
         if pyotp.TOTP(user.mfa_secret).verify(otp_code):
             messages.success(self.request, "OTP code verified successfully!")
             return redirect("account") 
@@ -150,7 +137,7 @@ class ProfileView(FormView):
         """If the form is invalid or the OTP is invalid, returns to profile"""
         user = self.request.user
         
-        qr_code_data = self._generate_qr_code(user)  # Regenerate QR Code
+        qr_code_data = self._generate_qr_code(user)  
         return self.render_to_response(self.get_context_data(
             form=form,
             qrcode=f"data:image/png;base64,{qr_code_data}"
@@ -172,7 +159,7 @@ class VerificationView(View):
             return redirect("2FA")
 
         if pyotp.TOTP(user.mfa_secret).verify(otp_code):
-            backend = get_backends()[0]  # Pega o primeiro backend configurado
+            backend = get_backends()[0]  
             user.backend = f"{backend.__module__}.{backend.__class__.__name__}"
             login(request, user)
             messages.success(request, "Login successful!")
@@ -187,9 +174,7 @@ class IndexView(FormView):
     form_class = RegisterForm
     success_url = reverse_lazy('login')
 
-    #form é uma instacia de RegisteForm
     def form_valid(self, form):
-        #form tem um atributo chamado cleaned_data para pegar dados do form que é o do RegisterForm
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         image = form.cleaned_data['image']
@@ -243,7 +228,6 @@ class AccountView(View):
         return render(request, self.template_name)
 
     def post(self, request, *args, **kwargs):
-        # button_delete = request.POST.get("delete_user")
         if "delete_user" in request.POST:
             user = request.user
             user.delete()
