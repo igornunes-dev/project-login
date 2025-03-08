@@ -1,10 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-# from django.contrib.auth.hashers import make_password
 from stdimage.models import StdImageField
 from django.contrib.auth.models import User
 from django.conf import settings
-# # Create your models here.
 
 class Register(models.Model):
   user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)

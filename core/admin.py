@@ -9,8 +9,4 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ['username', 'email']
     ordering = ['username']
     
-    # Definir campos adicionais
-   
-
-# Registra o modelo CustomUser com a classe CustomUserAdmin
 admin.site.register(CustomUser, CustomUserAdmin)
