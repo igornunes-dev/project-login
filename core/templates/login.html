@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %}
+  Login
+{% endblock %}
 {% block content %}
-{% load socialaccount %}
 
 
-  <div style="max-width: 400px; margin: auto; padding-top: 50px;">
+
+  <div class="container-login">
     
 
     {% if messages %}
@@ -39,7 +42,7 @@
           <i class="fa-solid fa-eye"></i>
         </div>
       </div>
-
+      
       <label for="enable_mfa">
         <input type="checkbox" name="enable_mfa" id="enable_mfa" /> Enable two-step verification (MFA)
       </label>
@@ -47,11 +50,6 @@
       <div class="password_reset">
         <a href="/reset_password/">Forgot password?</a>
       </div>
-
-      <a href="{% provider_login_url 'google' %}" class="container-a">
-        <img src="{% static 'image/googleicon.png' %}" alt="icone google" class="icon-google">
-        Login with Google
-      </a>
 
 
       <button type="submit" class="btn_login">

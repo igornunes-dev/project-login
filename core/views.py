@@ -121,7 +121,6 @@ class ProfileView(FormView):
         return context
 
     def form_valid(self, form):
-        """Processes OTP submission and validates the code"""
         user = self.request.user
         
         otp_code = form.cleaned_data['otp_code']    
@@ -159,8 +158,6 @@ class VerificationView(View):
             return redirect("2FA")
 
         if pyotp.TOTP(user.mfa_secret).verify(otp_code):
-            backend = get_backends()[0]  
-            user.backend = f"{backend.__module__}.{backend.__class__.__name__}"
             login(request, user)
             messages.success(request, "Login successful!")
             return redirect("account") 

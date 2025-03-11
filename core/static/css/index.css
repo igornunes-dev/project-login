@@ -24,6 +24,30 @@
   color: #fff;
 }
 
+.password_caracter,
+.password_special {
+  font-size: 15px;
+  color: red;
+  display: none;
+}
+
+.password_caracter.active{
+  display: block;
+}
+
+.password_special.active {
+  display: block;
+}
+
+.container_p_error {
+  margin-bottom: 15px;
+}
+
+.button_register.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 @media (max-width: 420px) {
   .forms {
     padding: 30px;

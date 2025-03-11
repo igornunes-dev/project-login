@@ -8,24 +8,6 @@ services:
       - .:/app
     ports:
       - "8000:8000"
-    depends_on:
-      - postgres-db
-    environment:
-      - POSTGRES_DB=project-login-db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_HOST=postgres-db  
-    networks:
-      - app-network
-
-  postgres-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: project-login-db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: root
-    networks:
-      - app-network
 
 networks:
   app-network:

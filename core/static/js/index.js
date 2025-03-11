@@ -17,6 +17,9 @@ function togglePasswordVisibility(inputField, eyeIcon) {
 const inputPassword = document.querySelector('#id_password');
 const inputNewPassword1 = document.querySelector("#id_new_password1");
 const inputNewPassword2 = document.querySelector("#id_new_password2");
+const message_caracter = document.querySelector('.password_caracter');
+const message_special = document.querySelector('.password_special');
+const button_register = document.querySelector('.button_register');
 
 const eyeIcon1 = document.querySelector(".fa-eye");
 const eyeIcon2 = document.querySelector(".fa-eye.input-2"); 
@@ -46,6 +49,50 @@ window.onload = () => {
     document.querySelector("main").style.opacity = "1"; 
   }, 500); 
 };
+
+function checkPasswordLength(str) {
+  // Se a senha for menor que 8 caracteres
+  return str.length <= 8;
+}
+
+
+if(inputPassword){
+  inputPassword.addEventListener("input", checkPasswordLength);
+}
+
+
+function containsSpecialCharacter(str) {
+  const specialChars = "!@#$%^&*(),.?\":{}|<>~`\\-_+=\\[\\];'/";
+  
+  for (let i = 0; i < str.length; i++) {
+    if (specialChars.indexOf(str[i]) !== -1) {
+      return true;
+    }
+  }
+  
+  return false;
+}
+
+inputPassword.addEventListener('input', () => {
+  if (!containsSpecialCharacter(inputPassword.value)) {
+    message_special.classList.add('active');
+    button_register.classList.add('disabled');
+    button_register.setAttribute('disabled', ''); 
+  } 
+  else {
+    message_special.classList.remove('active');
+  }
+  if(checkPasswordLength(inputPassword.value)) {
+    message_caracter.classList.add('active');
+  } else {
+    message_caracter.classList.remove('active');
+  }
+
+  if(!checkPasswordLength(inputPassword) && containsSpecialCharacter(inputPassword.value)) {
+      button_register.removeAttribute('disabled');
+      button_register.classList.remove('disabled');
+  }
+});
 
 
 

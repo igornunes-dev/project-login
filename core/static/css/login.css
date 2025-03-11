@@ -13,7 +13,12 @@
   background-color: #0056b3;
 }
 
-/* Estilo para mensagens de erro */
+.container-login {
+  max-width: 400px; 
+  margin: auto; 
+  padding-top: 50px;
+}
+
 .message {
   background-color: #0056b3;
   padding: 10px;

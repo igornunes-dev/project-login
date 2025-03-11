@@ -34,8 +34,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-SITE_ID = 2
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,11 +42,6 @@ INSTALLED_APPS = [
     "django_otp",
     "django_otp.plugins.otp_totp", 
     "django_otp.plugins.otp_static",
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,19 +50,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': ['profile', 'email'],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'OAUTH_PKCE_ENABLED': True, 
-    }
-}
+
 
 
 MIDDLEWARE = [
-    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -106,14 +90,11 @@ WSGI_APPLICATION = 'login.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME':  'project-login-db',
-        'USER': 'postgres',
-        'PASSWORD': 'root',
-        'HOST': 'postgres-db',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3', 
+        'NAME': BASE_DIR / 'db.sqlite3',         
     }
 }
+
 
 
 # Password validation
@@ -182,7 +163,6 @@ EMAIL_HOST_PASSWORD = 'kzgy jjue vjvd hxmw'
 
 AUTHENTICATION_BACKENDS = (
     "django.contrib.auth.backends.ModelBackend",
-    "allauth.account.auth_backends.AuthenticationBackend",
 )
 
 
