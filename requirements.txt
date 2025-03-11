@@ -7,7 +7,6 @@ coverage==7.6.12
 cryptography==44.0.2
 dj-database-url==2.3.0
 Django==5.1.6
-django-allauth==65.4.1
 django-otp==1.5.4
 django-stdimage==6.0.2
 djangorestframework==3.15.2
@@ -26,3 +25,4 @@ sqlparse==0.5.3
 typing_extensions==4.12.2
 tzdata==2025.1
 urllib3==2.3.0
+whitenoise==6.9.0
