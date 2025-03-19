@@ -15,10 +15,10 @@
       <h2>User Register</h2>
       {% csrf_token %}
     
-    <div class="input_form">
+    <!-- <div class="input_form">
         <label for="id_username">Username:</label>
         {{ form.username }}
-    </div>
+    </div> -->
     
     <div class="input_form">
         <label for="id_email">Email:</label>
@@ -39,11 +39,6 @@
       <p class="password_special">
         Sua senha deve ter um caracter especial.
       </p>
-    </div>
-    
-    <div class="input_form">
-        <label for="id_imagem">Image:</label>
-        {{ form.image }}
     </div>
     
     <button type="submit" class="button_register">Register</button>

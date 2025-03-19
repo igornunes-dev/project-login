@@ -2,13 +2,13 @@ from django import forms
 from .models import Register
 
 class RegisterForm(forms.ModelForm):
-    username = forms.CharField(max_length=150)
+    # username = forms.CharField(max_length=150)
     email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput, required=False)
+    password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
         model = Register
-        fields = ['username','email', 'image']
+        fields = ['email', 'password']
 
 class LoginForm(forms.Form):
     email = forms.EmailField(max_length=255)

@@ -15,6 +15,8 @@ function togglePasswordVisibility(inputField, eyeIcon) {
 }
 
 const inputPassword = document.querySelector('#id_password');
+const input_username = document.querySelector('#id_username');
+const input_email = document.querySelector('#id_email');
 const inputNewPassword1 = document.querySelector("#id_new_password1");
 const inputNewPassword2 = document.querySelector("#id_new_password2");
 const message_caracter = document.querySelector('.password_caracter');
@@ -51,8 +53,7 @@ window.onload = () => {
 };
 
 function checkPasswordLength(str) {
-  // Se a senha for menor que 8 caracteres
-  return str.length <= 8;
+  return str.length < 8;
 }
 
 
@@ -94,7 +95,12 @@ inputPassword.addEventListener('input', () => {
   }
 });
 
-
-
+// if(input_username.value.trim() === '' || input_email.value.trim() === '' || inputPassword.value.trim() === '') {
+//   button_register.setAttribute('disabled', '');
+//   button_register.classList.add('disabled');
+// } else {
+//   button_register.removeAttribute('disabled', '');
+//   button_register.classList.remove  ('disabled');
+// }
 
 

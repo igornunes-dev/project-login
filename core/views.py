@@ -66,7 +66,7 @@ class CustomPasswordResetView(PasswordResetView):
         email_message.attach_alternative(body, "text/html")  
 
         try:
-            email_message.send()  # Envia o e-mail
+            email_message.send()
             messages.success(request, "Password recovery email sent successfully. Check your inbox.")
         except Exception as e:
             messages.error(request, f"An error occurred while sending the email: {str(e)}")
@@ -174,7 +174,6 @@ class IndexView(FormView):
     def form_valid(self, form):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
-        image = form.cleaned_data['image']
         
         if CustomUser.objects.filter(email=email).exists():
             messages.error(self.request, "This email is already in use.")
@@ -182,7 +181,7 @@ class IndexView(FormView):
         
         try:
             user = CustomUser.objects.create_user(username=email, email=email, password=password)
-            Register.objects.create(user=user, image=image)
+            Register.objects.create(user=user)
             messages.success(self.request, "Registration successful.")
             return super().form_valid(form)
         except Exception as e:

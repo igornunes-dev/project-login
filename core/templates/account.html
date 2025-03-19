@@ -3,22 +3,6 @@
 {% block content %}
 
 <div class="container-account">
-{% if user.socialaccount_set.exists %}
-    {% with user.socialaccount_set.first as social_account %}
-        <div class="profile-container">
-            <img src="{{ social_account.get_avatar_url }}" alt="Foto do Perfil" class="profile-image">
-        </div>
-    {% endwith %}
-{% else %}
-    <div class="profile-container">
-        {% if user.register.image %}
-            <img src="{{ user.register.image.url }}" alt="Imagem do Usuário" class="profile-image">
-        {% else %}
-            <div class="placeholder-image">Sem Imagem</div>
-        {% endif %}
-    </div>
-{% endif %}
-
 <div class="profile-info">
     <p><span>Email:</span> {{ user.email }}</p>
     <p><span>Last Login:</span> {{ user.last_login }}</p>
