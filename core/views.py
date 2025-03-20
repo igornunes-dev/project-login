@@ -180,8 +180,12 @@ class IndexView(FormView):
             return super().form_invalid(form)
         
         try:
-            user = CustomUser.objects.create_user(username=email, email=email, password=password)
-            Register.objects.create(user=user)
+            user = CustomUser(username=email, email=email)
+            user.set_password(password)
+            user.save()
+
+            register = Register(user=user)
+            register.save()
             messages.success(self.request, "Registration successful.")
             return super().form_valid(form)
         except Exception as e:
